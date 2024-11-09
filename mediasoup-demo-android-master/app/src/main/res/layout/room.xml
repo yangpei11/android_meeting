@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FF1C1F30">
+
+    <!-- 顶部信息栏 -->
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="你好世界"
+        android:textColor="#FFFFFF"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:padding="16dp"/>
+
+    <!-- 参会者图像和名字 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+    <!-- 底部控制按钮 -->
+<!--    <LinearLayout-->
+<!--        android:id="@+id/buttonGroup"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginBottom="20dp">-->
+
+<!--        &lt;!&ndash; Microphone Button &ndash;&gt;-->
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/buttonMic1"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true"-->
+<!--            android:src="@drawable/mic"-->
+<!--            app:backgroundTint="#FFFFFF"-->
+<!--            app:elevation="6dp"-->
+<!--            android:layout_marginEnd="64dp"-->
+<!--            app:pressedTranslationZ="12dp"/>-->
+
+
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/fab1"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true"-->
+<!--            android:src="@drawable/video"-->
+<!--            app:backgroundTint="#FFFFFF"-->
+<!--            app:elevation="6dp"-->
+<!--            app:pressedTranslationZ="12dp"/>-->
+<!--    </LinearLayout>-->
+
+</RelativeLayout>
