@@ -97,4 +97,8 @@ public class Producers {
   public void clear() {
     mProducers.clear();
   }
+
+  public Map<String, ProducersWrapper> getProducers() {
+    return mProducers;
+  }
 }

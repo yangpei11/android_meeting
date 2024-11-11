@@ -8,12 +8,25 @@ import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.LifecycleOwner;
 
+import org.mediasoup.droid.Logger;
 import org.mediasoup.droid.demo.R;
 import org.mediasoup.droid.lib.RoomClient;
 import org.mediasoup.droid.lib.lv.RoomStore;
+import org.mediasoup.droid.lib.model.Consumers;
+import org.mediasoup.droid.lib.model.Producers;
 import org.mediasoup.droid.lib.model.RoomInfo;
 
+import java.util.Map;
+import java.util.Objects;
+
 public class RoomProps extends EdiasProps {
+
+  public enum RoomType{
+    AudioOnly, //只有音频
+    VideoOnePerson,
+    TwoPersonVideo, //两个人带视频
+    ManyVideo, //三人以上带视频
+  };
 
   private final Animation mConnectingAnimation;
   private ObservableField<String> mInvitationLink;
@@ -23,6 +36,8 @@ public class RoomProps extends EdiasProps {
   private ObservableField<Boolean> mAudioMuted;
   private ObservableField<Boolean> mRestartIceInProgress;
   private final Animation mRestartIceAnimation;
+
+  private ObservableField<RoomType> mRoomType;
 
   public RoomProps(@NonNull Application application, @NonNull RoomStore roomStore) {
     super(application, roomStore);
@@ -87,5 +102,6 @@ public class RoomProps extends EdiasProps {
               mAudioMuted.set(me.isAudioMuted());
               mRestartIceInProgress.set(me.isRestartIceInProgress());
             });
+
   }
 }

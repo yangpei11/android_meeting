@@ -1,0 +1,115 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+        <variable
+            name="meViewProps"
+            type="org.mediasoup.droid.demo.vm.MeProps" />
+
+        <variable
+            name="peerViewProps"
+            type="org.mediasoup.droid.demo.vm.PeerViewProps" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <org.webrtc.SurfaceViewRenderer
+            android:id="@+id/video_renderer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:scaleType="centerCrop"
+            app:layout_constraintWidth_percent="1.0"
+            app:layout_constraintHeight_percent="1.0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            bind:edias_render="@{peerViewProps.videoTrack}" />
+
+        <!-- 占位图片，当视频未显示时展示 -->
+        <LinearLayout
+            android:id="@+id/video_hidden"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintWidth_percent="1.0"
+            app:layout_constraintHeight_percent="1.0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            bind:edias_render_empty="@{peerViewProps.videoTrack}">
+
+            <!-- 占位顶部视图 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!-- 占位图片 -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:scaleType="centerCrop"
+                android:src="@drawable/buddy" />
+        </LinearLayout>
+
+
+        <org.webrtc.SurfaceViewRenderer
+            android:id="@+id/video_renderer1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:scaleType="centerCrop"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintWidth_percent="0.25"
+            app:layout_constraintHeight_percent="0.25"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            bind:edias_render1="@{meViewProps.videoTrack}" />
+
+        <!-- 占位图片，当视频未显示时展示 -->
+        <LinearLayout
+            android:id="@+id/video_hidden1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintWidth_percent="0.25"
+            app:layout_constraintHeight_percent="0.25"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            bind:edias_render1_empty="@{meViewProps.videoTrack}">
+
+            <!-- 占位顶部视图 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!-- 占位图片 -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:scaleType="centerCrop"
+                android:src="@drawable/buddy" />
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

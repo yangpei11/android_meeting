@@ -54,23 +54,6 @@
                     android:textColor="#FFFFFF"
                     android:layout_gravity="center" />
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/mic_state"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_margin="4dp"-->
-<!--                    android:layout_marginStart="5dp"-->
-<!--                    android:clickable="false"-->
-<!--                    android:src="@drawable/icon_mic_black_on"-->
-                    />
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/mic_state"-->
-<!--                    android:layout_width="24dp"-->
-<!--                    android:layout_height="24dp"-->
-<!--                    bind:edias_enable_audio="@{enableAudio}"-->
-<!--                    bind:edias_is_speaking="@{peerViewProps.isSpeaking}"-->
-<!--                    bind:volumeBar="@{volumeBar}" />-->
 
                 <ImageView
                     android:id="@+id/mic_state"
@@ -81,27 +64,6 @@
                     bind:edias_enable_audio="@{enableAudio}"
                     bind:edias_is_speaking="@{peerViewProps.isSpeaking}"
                     bind:edias_volume = "@{peerViewProps.mVolume}"/>
-
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/mic_on"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_margin="4dp"-->
-<!--                    android:layout_marginStart="5dp"-->
-<!--                    android:clickable="false"-->
-<!--                    android:src="@drawable/icon_mic_black_on"-->
-<!--                    android:visibility="@{enableAudio ? View.VISIBLE : View.GONE}"/>-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/mic_off"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_margin="4dp"-->
-<!--                    android:layout_marginStart="5dp"-->
-<!--                    android:clickable="false"-->
-<!--                    android:src="@drawable/icon_mic_white_off"-->
-<!--                    android:visibility="@{enableAudio ? View.GONE : View.VISIBLE}"/>-->
 
             </LinearLayout>
         </LinearLayout>

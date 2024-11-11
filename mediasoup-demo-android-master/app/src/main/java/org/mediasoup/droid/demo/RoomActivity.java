@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import com.nabinbhandari.android.permissions.Permissions;
 import org.mediasoup.droid.Logger;
 import org.mediasoup.droid.MediasoupClient;
 import org.mediasoup.droid.demo.adapter.PeerAdapter;
+import org.mediasoup.droid.demo.adapter.TwoPersonAdapter;
 import org.mediasoup.droid.demo.databinding.ActivityRoomBinding;
 import org.mediasoup.droid.demo.vm.EdiasProps;
 import org.mediasoup.droid.demo.vm.MeProps;
@@ -40,11 +42,15 @@ import org.mediasoup.droid.lib.PeerConnectionUtils;
 import org.mediasoup.droid.lib.RoomClient;
 import org.mediasoup.droid.lib.RoomOptions;
 import org.mediasoup.droid.lib.lv.RoomStore;
+import org.mediasoup.droid.lib.model.Consumers;
 import org.mediasoup.droid.lib.model.Me;
 import org.mediasoup.droid.lib.model.Notify;
 import org.mediasoup.droid.lib.model.Peer;
+import org.mediasoup.droid.lib.model.Producers;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class RoomActivity extends AppCompatActivity {
 
@@ -61,6 +67,14 @@ public class RoomActivity extends AppCompatActivity {
   private ActivityRoomBinding mBinding;
   private PeerAdapter mPeerAdapter;
   private GridLayoutManager gridLayoutManager1;
+
+  private TwoPersonAdapter mTwoPersonAdapter;
+  private  LinearLayoutManager linearLayoutManager;
+
+
+  private boolean mMeHaveVideo = false;
+  private boolean mPeerHaveVideo = false;
+  private int mRoomNum = 0;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +131,14 @@ public class RoomActivity extends AppCompatActivity {
     ((TextView)findViewById(R.id.version)).setText(String.valueOf(MediasoupClient.version()));
   }
 
+  private void changeAdaptorType(){
+    if(mRoomNum == 1){
+      if(mMeHaveVideo){
+
+      }
+    }
+  }
+
   private void initRoomClient() {
     mRoomClient =
         new RoomClient(
@@ -165,39 +187,84 @@ public class RoomActivity extends AppCompatActivity {
         });
     mBinding.restartIce.setOnClickListener(v -> mRoomClient.restartIce());
 
+
+    mRoomStore.getPeers().observe(this, peers -> {
+      int peerSize = peers.getAllPeers().size();
+      Logger.d("peerSize", String.valueOf(peerSize));
+      if(peerSize == 1){
+        mBinding.remotePeers.setVisibility(View.VISIBLE);
+        mTwoPersonAdapter = new TwoPersonAdapter(mRoomStore, this, meProps, peers.getAllPeers().get(0));
+        linearLayoutManager = new LinearLayoutManager(this);
+        mBinding.remotePeers.setLayoutManager(linearLayoutManager);
+        mBinding.remotePeers.setAdapter(mTwoPersonAdapter);
+        //mBinding.remotePeers.setVisibility(View.VISIBLE);
+      }
+    });
     // Peers.
-    mPeerAdapter = new PeerAdapter(mRoomStore, this, mRoomClient, meProps);
-    //mBinding.remotePeers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-    //这个地方设置
-    gridLayoutManager1=new GridLayoutManager(this, 4);
-    mBinding.remotePeers.setLayoutManager(gridLayoutManager1);
-//    mBinding.remotePeers.setLayoutManager(new GridLayoutManager(this, 4));
-    mBinding.remotePeers.setAdapter(mPeerAdapter);
-
-    mRoomStore
-        .getPeers()
-        .observe(
-            this,
-            peers -> {
-              List<Peer> peersList = peers.getAllPeers();
-              if (peersList.isEmpty()) {
-                mBinding.remotePeers.setVisibility(View.GONE);
-                mBinding.roomState.setVisibility(View.VISIBLE);
-              } else {
-                mBinding.remotePeers.setVisibility(View.VISIBLE);
-                mBinding.roomState.setVisibility(View.GONE);
-              }
-              mPeerAdapter.replacePeers(peersList);
-              Log.e("PeerSize",String.valueOf(peersList.size()));
-              if(peersList.size()+1<=3 && peersList.size()+1 >= 1){
-                gridLayoutManager1.setSpanCount(peersList.size() + 1);
-                mBinding.remotePeers.requestLayout();
-              }else{
-                gridLayoutManager1.setSpanCount(3);
-                mBinding.remotePeers.requestLayout();
-              }
-
-            });
+//    mPeerAdapter = new PeerAdapter(mRoomStore, this, mRoomClient, meProps);
+//    //mBinding.remotePeers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//    //这个地方设置
+//    gridLayoutManager1=new GridLayoutManager(this, 4);
+//    mBinding.remotePeers.setLayoutManager(gridLayoutManager1);
+////    mBinding.remotePeers.setLayoutManager(new GridLayoutManager(this, 4));
+//    mBinding.remotePeers.setAdapter(mPeerAdapter);
+//
+//    mRoomStore.getConsumers().observe(this, consumers -> {
+//      mPeerHaveVideo = false;
+//      Map<String, Consumers.ConsumerWrapper> consumerMap = consumers.getAllConsumer();
+//      for (Consumers.ConsumerWrapper consumer : consumerMap.values()) {
+//        if(Objects.equals(consumer.getConsumer().getKind(), "video")){
+//          mPeerHaveVideo = true;
+//          break;
+//        }
+//      }
+//      Logger.d("RoomStatus", "mPeerHaveVideo is: " + mPeerHaveVideo);
+//    });
+//
+//    mRoomStore.getProducers().observe(this, producers -> {
+//      mMeHaveVideo = false;
+//      Map<String, Producers.ProducersWrapper> producerMap = producers.getProducers();
+//      for(Producers.ProducersWrapper producer: producerMap.values()){
+//        if(Objects.equals(producer.getProducer().getKind(), "video")){
+//          mMeHaveVideo = true;
+//          break;
+//        }
+//      }
+//      Logger.d("RoomStatus", "mMeHaveVidoe is: " + mMeHaveVideo);
+//    });
+//
+//
+//    mRoomStore.getPeers().observe(this, peers -> {
+//      int peerSize = peers.getAllPeers().size();
+//      mRoomNum = peerSize + 1;
+//      Logger.d("RoomStatus", "mRoomNum is: " + (mRoomNum) );
+//    });
+//
+//    mRoomStore
+//        .getPeers()
+//        .observe(
+//            this,
+//            peers -> {
+//              List<Peer> peersList = peers.getAllPeers();
+//              //不可能为空
+//              if (peersList.isEmpty() && false) {
+//                mBinding.remotePeers.setVisibility(View.GONE);
+//                mBinding.roomState.setVisibility(View.VISIBLE);
+//              } else {
+//                mBinding.remotePeers.setVisibility(View.VISIBLE);
+//                mBinding.roomState.setVisibility(View.GONE);
+//              }
+//              mPeerAdapter.replacePeers(peersList);
+//              Log.e("PeerSize",String.valueOf(peersList.size()+1));
+//              if(peersList.size()+1<=3 && peersList.size()+1 >= 1){
+//                gridLayoutManager1.setSpanCount(peersList.size() + 1);
+//                mBinding.remotePeers.requestLayout();
+//              }else{
+//                gridLayoutManager1.setSpanCount(3);
+//                mBinding.remotePeers.requestLayout();
+//              }
+//
+//            });
 
     // Notify
     final Observer<Notify> notifyObserver =

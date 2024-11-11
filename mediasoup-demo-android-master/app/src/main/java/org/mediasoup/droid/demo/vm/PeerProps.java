@@ -13,6 +13,7 @@ import org.mediasoup.droid.Consumer;
 import org.mediasoup.droid.Logger;
 import org.mediasoup.droid.lib.lv.RoomStore;
 import org.mediasoup.droid.lib.model.Consumers;
+import org.mediasoup.droid.lib.model.Info;
 import org.mediasoup.droid.lib.model.Peer;
 import org.mediasoup.droid.lib.model.Peers;
 import org.webrtc.AudioTrack;
@@ -91,12 +92,15 @@ public class PeerProps extends PeerViewProps {
         .getRoomInfo()
         .observe(owner, roomInfo -> {
                 mFaceDetection.set(roomInfo.isFaceDetection());
-                int volume = roomInfo.getVolume( mPeer.get().getId());
-                if(volume != -1){
-                  setIsSpeaking(true);
-                  setVolume(volume);
-                }else{
-                  setIsSpeaking(false);
+                Info peerInfo = mPeer.get();
+                if(peerInfo != null) {
+                  int volume = roomInfo.getVolume(peerInfo.getId());
+                  if (volume != -1) {
+                    setIsSpeaking(true);
+                    setVolume(volume);
+                  } else {
+                    setIsSpeaking(false);
+                  }
                 }
         });
     mStateComposer.connect(owner, getRoomStore(), peerId);

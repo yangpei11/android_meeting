@@ -130,6 +130,10 @@ public class Consumers {
     return consumers.get(consumerId);
   }
 
+  public Map<String, ConsumerWrapper> getAllConsumer() { return consumers;}
+
+
+
   public void clear() {
     consumers.clear();
   }

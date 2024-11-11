@@ -280,4 +280,26 @@ public class BindingAdapters {
       renderer.setVisibility(View.GONE);
     }
   }
+
+
+  @BindingAdapter({"edias_render1"})
+  public static void render1(SurfaceViewRenderer renderer, VideoTrack track) {
+    Log.d(TAG, "edias_render: " + (track != null));
+    if (track != null) {
+      track.addSink(renderer);
+      renderer.setVisibility(View.VISIBLE);
+    } else {
+      renderer.setVisibility(View.GONE);
+    }
+  }
+
+  @BindingAdapter({"edias_render1_empty"})
+  public static void renderEmpty1(View renderer, VideoTrack track) {
+    Log.d(TAG, "edias_render_empty: " + (track != null));
+    if (track == null) {
+      renderer.setVisibility(View.VISIBLE);
+    } else {
+      renderer.setVisibility(View.GONE);
+    }
+  }
 }
